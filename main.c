@@ -6,7 +6,7 @@
 #define SUBJECTS 6
 
 
-struct Student {
+struct Students {
     char id[20];
     char name[50];
     int marks[SUBJECTS];
@@ -16,17 +16,17 @@ struct Student {
 };
 
 
-int isValidID(char id[], struct Student s[], int count);
+int isValidID(char id[], struct Students s[], int count);
 int isValidName(char name[]);
 int isValidMarks(int m);
-void calculateResult(struct Student *s);
-void assignGrade(struct Student *s);
-void display(struct Student s[], int n);
-void classStatistics(struct Student s[], int n);
+void calculateResult(struct Students *s);
+void assignGrade(struct Students *s);
+void report(struct Students s[], int n);
+void Stats(struct Students s[], int n);
 
 
 int main() {
-    struct Student s[MAX];
+    struct Students s[MAX];
     int n;
     FILE *fp;
 
@@ -65,13 +65,13 @@ int main() {
 
     fclose(fp);
 
-    display(s, n);
-    classStatistics(s, n);
+    report(s, n);
+    Stats(s, n);
 
     return 0;
 }
 
-int isValidID(char id[], struct Student s[], int count) {
+int isValidID(char id[], struct Students s[], int count) {
     for (int i = 0; id[i]; i++)
         if (!isalnum(id[i]))
             return 0;
@@ -96,7 +96,7 @@ int isValidMarks(int m) {
 }
 
 
-void calculateResult(struct Student *s) {
+void calculateResult(struct Students *s) {
     s->total = 0;
     for (int i = 0; i < SUBJECTS; i++)
         s->total += s->marks[i];
@@ -106,7 +106,7 @@ void calculateResult(struct Student *s) {
 }
 
 
-void assignGrade(struct Student *s) {
+void assignGrade(struct Students *s) {
     float p = s->percentage;
 
     if (p >= 90) strcpy(s->grade, "O");
@@ -119,7 +119,7 @@ void assignGrade(struct Student *s) {
     else strcpy(s->grade, "F");
 }
 
-void display(struct Student s[], int n) {
+void report(struct Students s[], int n) {
     printf("\nID\tName\tTotal\tPercentage\tGrade\n");
     printf("-------------------------------------------------\n");
     for (int i = 0; i < n; i++) {
@@ -130,7 +130,7 @@ void display(struct Student s[], int n) {
 }
 
 
-void classStatistics(struct Student s[], int n) {
+void Stats(struct Students s[], int n) {
     float sum = 0, max = s[0].percentage, min = s[0].percentage;
     int gradeCount[8] = {0};
 
